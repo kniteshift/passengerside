@@ -9,37 +9,39 @@ const uber = new Uber({
   name: 'passanger-side'
 });
 
-export const getUberPrices = (req, res) => {
-  let data = null
-  const UBER_API = `https://api.uber.com/v1.2/estimates/price?start_latitude=${req.query.s_lat}&start_longitude=${req.query.s_lng}&end_latitude=${req.query.e_lat}&end_longitude=${req.query.e_lng}`
+export const getUberPrices = (req) => {
+  return new Promise((resolve, reject) => {
+    const {
+      start_lat,
+      start_lng,
+      end_lat,
+      end_lng
+    } = req.body
 
-  // Saving this for refactoring
-  // const {
-  //   start_lat,
-  //   start_lng,
-  //   end_lat,
-  //   end_lng
-  // } = req.body
-
-  uber.estimates.getPriceForRouteAsync(req.query.s_lat, req.query.s_lng, req.query.e_lat, req.query.e_lng)
-    .then(response => { data = response })
-    .catch(err => { data = err })
-  
-  return data
-}
-
-export const getLyftPrices = (req, res) => {
-  let data = null
-  const headers = { Authorization: `Bearer ${lyft_cred.client_token || process.env.lyft_token}`}
-
-  
-  axios({
-    headers,
-    method: 'get',
-    url: `https://api.lyft.com/v1/cost?start_lat=${req.query.s_lat}&start_lng=${req.query.s_lng}&end_lat=${req.query.e_lat}&end_lng=${req.query.e_lng}`
+    uber.estimates.getPriceForRouteAsync(start_lat, start_lng, end_lat, end_lng)
+      .then(response => resolve(response))
+      .catch(err => reject(err))
   })
-    .then(response => { data = response })
-    .catch(err => { data = err })
+}  
 
-  return data
+export const getLyftPrices = (req) => {
+  return new Promise((resolve, reject) => {
+    const headers = { Authorization: `Bearer ${lyft_cred.client_token || process.env.lyft_token}`}
+
+    const {
+      start_lat,
+      start_lng,
+      end_lat,
+      end_lng
+    } = req.body
+    
+    axios({
+      headers,
+      method: 'get',
+      url: `https://api.lyft.com/v1/cost?start_lat=${start_lat}&start_lng=${start_lng}&end_lat=${end_lat}&end_lng=${end_lng}`
+    })
+      .then(({ data }) => resolve(data))
+      .catch(err => reject(err))
+  })
+
 }

@@ -12,6 +12,20 @@ const PORT = process.env.PORT || 3000
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 
+app.post('/fetch', (req, res, next) => {
+  async function fetchPrices(req, res) {
+    const uber = await getUberPrices(req)
+    const lyft = await getLyftPrices(req)
+
+    return {
+      uber: uber,
+      lyft: lyft
+    }
+  }
+
+  fetchPrices(req, res).then(prices => res.status(200).send(prices))
+})
+
 // WEBPACK
 function normalizeAssets(assets) {
   return Array.isArray(assets) ? assets : [assets]
@@ -52,26 +66,12 @@ app.use((req, res) => {
                         .map(path => `<script src="${path}"></script>`)
                         .join('\n')
                     }
-            <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-            <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
         </body>
         </html>
     `)
 })
 
-app.get('/fetch', (req, res, next) => {
-  async function getPrices(req, res) {
-    let prices = {
-      uber: null,
-      lyft: null
-    }
-
-    obj.uber = await getUberPrices(req, res)
-    obj.lyft = await getLyftPrices(req, res)
-
-    return res.status(200).send(prices)
-  }
-})
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`)
