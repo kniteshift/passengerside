@@ -19,7 +19,7 @@ export const getUberPrices = (req) => {
     } = req.body
 
     uber.estimates.getPriceForRouteAsync(start_lat, start_lng, end_lat, end_lng)
-      .then(response => resolve(response))
+      .then(response => resolve(response.prices))
       .catch(err => reject(err))
   })
 }  
@@ -40,7 +40,7 @@ export const getLyftPrices = (req) => {
       method: 'get',
       url: `https://api.lyft.com/v1/cost?start_lat=${start_lat}&start_lng=${start_lng}&end_lat=${end_lat}&end_lng=${end_lng}`
     })
-      .then(({ data }) => resolve(data))
+      .then(({ data }) => resolve(data.cost_estimates))
       .catch(err => reject(err))
   })
 
