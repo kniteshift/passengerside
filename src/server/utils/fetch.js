@@ -9,9 +9,17 @@ const uber = new Uber({
   name: 'passanger-side'
 });
 
-export function getUberPrices(req, res) {
+export const getUberPrices = (req, res) => {
   let data = null
   const UBER_API = `https://api.uber.com/v1.2/estimates/price?start_latitude=${req.query.s_lat}&start_longitude=${req.query.s_lng}&end_latitude=${req.query.e_lat}&end_longitude=${req.query.e_lng}`
+
+  // Saving this for refactoring
+  // const {
+  //   start_lat,
+  //   start_lng,
+  //   end_lat,
+  //   end_lng
+  // } = req.body
 
   uber.estimates.getPriceForRouteAsync(req.query.s_lat, req.query.s_lng, req.query.e_lat, req.query.e_lng)
     .then(response => { data = response })
@@ -20,10 +28,11 @@ export function getUberPrices(req, res) {
   return data
 }
 
-export function getLyftPrices(req, res) {
+export const getLyftPrices = (req, res) => {
   let data = null
   const headers = { Authorization: `Bearer ${lyft_cred.client_token || process.env.lyft_token}`}
 
+  
   axios({
     headers,
     method: 'get',
