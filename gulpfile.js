@@ -1,6 +1,6 @@
 const gulp = require('gulp')
-const babel = require('babel')
-const clean = require('clean')
+const babel = require('gulp-babel')
+const clean = require('gulp-clean')
 
 gulp.task('clean', () => {
   gulp.src('build', { read: false })
