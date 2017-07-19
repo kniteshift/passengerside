@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server/server.js --exec babel-node --ignore src/client",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers js:babel-core/register"
   },
   "author": "",
   "license": "ISC",
@@ -27,11 +27,13 @@
   },
   "devDependencies": {
     "babel-loader": "^7.1.1",
+    "chai": "^4.1.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
     "html-webpack-plugin": "^2.29.0",
+    "http": "0.0.0",
     "node-sass-chokidar": "0.0.3",
     "webpack": "^3.3.0"
   }
