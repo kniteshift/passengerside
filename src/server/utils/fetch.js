@@ -9,6 +9,13 @@ const uber = new Uber({
   name: 'passanger-side'
 });
 
+let Category = function(name, low, high) {
+  this.name = name
+  this.low = low
+  this.high = high
+  this.range = `$${this.low} - $${this.high}`
+}
+
 export const getUberPrices = (req) => {
   return new Promise((resolve, reject) => {
     const {
@@ -19,7 +26,28 @@ export const getUberPrices = (req) => {
     } = req.body
 
     uber.estimates.getPriceForRouteAsync(start_lat, start_lng, end_lat, end_lng)
-      .then(response => resolve(response.prices))
+      .then(response => {
+        const { prices } = response
+        
+        const products = prices.map(product => {
+          let { display_name, low_estimate, high_estimate } = product
+          let category = new Category(display_name, low_estimate, high_estimate)
+
+          return category
+        })
+
+        let services = products.filter(product => {
+          if (product.name !== "TAXI") {
+            return product
+          }
+        })
+
+        services = services.sort((a, b) => {
+          return a.low - b.low
+        })
+
+        resolve(services)
+      })
       .catch(err => reject(err))
   })
 }  
@@ -40,7 +68,25 @@ export const getLyftPrices = (req) => {
       method: 'get',
       url: `https://api.lyft.com/v1/cost?start_lat=${start_lat}&start_lng=${start_lng}&end_lat=${end_lat}&end_lng=${end_lng}`
     })
-      .then(({ data }) => resolve(data.cost_estimates))
+      .then(({ data }) => {
+        const { cost_estimates } = data
+
+        let products = cost_estimates.map(product => {
+          let { display_name, estimated_cost_cents_min, estimated_cost_cents_max } = product
+          let min = Math.round(estimated_cost_cents_min/100),
+          max = Math.round(estimated_cost_cents_max/100)
+
+          let category = new Category(display_name, min, max)
+
+          return category
+        })
+
+        products = products.sort((a, b) => {
+          return a.low - b.low
+        })
+
+        resolve(products)
+      })
       .catch(err => reject(err))
   })
 
