@@ -29,17 +29,17 @@ export function fetchPrices(props = {}) {
   }
 }
 
-export function getStart(props = {}) {
-  return dispatch => {
-    getStartSuccess(props)
-  }
-}
+// export function getStart(props = {}) {
+//   return dispatch => {
+//     dispatch(getStartSuccess())
+//   }
+// }
 
-export function getDest(props = {}) {
-  return dispatch => {
-    getDestSuccess(props)
-  }
-}
+// export function getDest(props = {}) {
+//   return dispatch => {
+//     dispatch(getDestSuccess())
+//   }
+// }
 
 export function fetchSuccess(rates) {
   return {
@@ -55,7 +55,7 @@ export function fetchError(error) {
   }
 }
 
-export function getStartSuccess(coords) {
+export function getStart(coords) {
   return {
     type: GET_START_SUCCESS,
     payload: coords
@@ -69,7 +69,7 @@ export function getStartFailure(error) {
   }
 }
 
-export function getDestSuccess(coords) {
+export function getDest(coords) {
   return {
     type: GET_DEST_SUCCESS,
     payload: coords
