@@ -3,8 +3,9 @@ import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import webpack from 'webpack'
 import webpackMiddleware from 'webpack-dev-middleware'
-import webpackConfig from '../../webpack.config.js'
+import webpackConfig from '../../webpack.config'
 import { getLyftPrices, getUberPrices } from './utils/fetch'
+import { GOOGLE_API_KEY } from './config/key'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -50,7 +51,6 @@ app.use((req, res) => {
                 <!-- Import Google Icon Font -->
             <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             <!-- Import materialize.css -->
-            <link href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet">
             ${
           normalizeAssets(assetsByChunkName.main)
           .filter(path => path.endsWith('.css'))
@@ -60,13 +60,13 @@ app.use((req, res) => {
         </head>
         <body>
             <div id="root"></div>
+            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY || process.env.GOOGLE_API_KEY}&libraries=places"></script>
                 ${
-                        normalizeAssets(assetsByChunkName.main)
-                        .filter(path => path.endsWith('.js'))
-                        .map(path => `<script src="${path}"></script>`)
-                        .join('\n')
-                    }
-            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+                  normalizeAssets(assetsByChunkName.main)
+                  .filter(path => path.endsWith('.js'))
+                  .map(path => `<script src="${path}"></script>`)
+                  .join('\n')
+                }
         </body>
         </html>
     `)
