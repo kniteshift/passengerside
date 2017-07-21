@@ -9,10 +9,12 @@ class Searchbar extends Component {
     super(props)
     this.state = { 
       address: '',
-      purpose: this.props.purpose
+      purpose: this.props.purpose,
+      error: false
     }
 
     this.handleSelect = this.handleSelect.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
   }
 
   handleSelect(address) {
@@ -32,6 +34,7 @@ class Searchbar extends Component {
           }
         }
       })
+      .then(() => this.setState({ error: false }))
       .catch(err => {
         if (this.state.purpose) {
           if (this.state.purpose == "Start") {
@@ -44,10 +47,17 @@ class Searchbar extends Component {
       })
   }
 
+  handleBlur(e) {
+    if(e.target.value.length <= 6) {
+      this.setState({ error: true })
+    }
+  }
+
   render() {
     const inputProps = {
       value: this.state.address,
       onChange: this.handleSelect,
+      onBlur: this.handleBlur,
       type: 'search',
       placeholder: this.props.purpose
     }
@@ -69,6 +79,7 @@ class Searchbar extends Component {
           onSelect={this.handleSelect}
           onEnterKeyDown={this.handleSelect}
           />
+        {this.state.error === true ? <div>Error: Please entire the full address of your destination</div> : ' '}
       </div>
     )
   }
