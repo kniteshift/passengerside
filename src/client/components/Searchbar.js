@@ -13,7 +13,6 @@ class Searchbar extends Component {
     }
 
     this.handleSelect = this.handleSelect.bind(this)
-    this.onChange = (address) => this.setState({ address })
   }
 
   handleSelect(address) {
@@ -48,7 +47,7 @@ class Searchbar extends Component {
   render() {
     const inputProps = {
       value: this.state.address,
-      onChange: this.onChange,
+      onChange: this.handleSelect,
       type: 'search',
       placeholder: this.props.purpose
     }
@@ -69,7 +68,6 @@ class Searchbar extends Component {
           classNames={cssClasses}
           onSelect={this.handleSelect}
           onEnterKeyDown={this.handleSelect}
-          onBlur={this.handleSelect}
           />
       </div>
     )

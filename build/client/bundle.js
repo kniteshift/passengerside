@@ -45965,9 +45965,6 @@ var Searchbar = function (_Component) {
     };
 
     _this.handleSelect = _this.handleSelect.bind(_this);
-    _this.onChange = function (address) {
-      return _this.setState({ address: address });
-    };
     return _this;
   }
 
@@ -46005,7 +46002,7 @@ var Searchbar = function (_Component) {
     value: function render() {
       var inputProps = {
         value: this.state.address,
-        onChange: this.onChange,
+        onChange: this.handleSelect,
         type: 'search',
         placeholder: this.props.purpose
       };
@@ -46038,8 +46035,7 @@ var Searchbar = function (_Component) {
           autocompleteItem: AutocompleteItem,
           classNames: cssClasses,
           onSelect: this.handleSelect,
-          onEnterKeyDown: this.handleSelect,
-          onBlur: this.handleSelect
+          onEnterKeyDown: this.handleSelect
         })
       );
     }
