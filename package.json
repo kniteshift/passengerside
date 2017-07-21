@@ -27,7 +27,9 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "webpack": "^3.3.0",
-    "webpack-dev-middleware": "^1.11.0"
+    "webpack-dev-middleware": "^1.11.0",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^2.29.0"
   },
   "devDependencies": {
     "babel-loader": "^7.1.1",
@@ -37,11 +39,9 @@
     "chai": "^4.1.0",
     "chai-http": "^3.0.0",
     "css-loader": "^0.28.4",
-    "extract-text-webpack-plugin": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
-    "html-webpack-plugin": "^2.29.0",
     "node-sass-chokidar": "0.0.3",
     "redux-logger": "^3.0.6",
     "sass-loader": "^6.0.6",
