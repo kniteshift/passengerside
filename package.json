@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node build/server/server.js",
     "dev": "nodemon src/server/server.js --exec babel-node --ignore src/client",
     "test": "mocha --compilers js:babel-core/register"
   },
