@@ -1,0 +1,118 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  max-width: 100%; }
+
+html,
+body,
+div,
+main,
+header,
+section,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+input,
+button,
+table,
+th,
+tr,
+thead,
+tbody,
+form {
+  margin: 0;
+  padding: 0;
+  font-family: 'Omnes Pro', Arial, Helvetica, sans-serif; }
+
+.App-header {
+  background: #4CA1AF;
+  background: -webkit-linear-gradient(to right, #C4E0E5, #4CA1AF);
+  background: linear-gradient(to right, #C4E0E5, #4CA1AF);
+  height: auto;
+  max-width: 100%;
+  width: 100%;
+  padding-top: 40px;
+  color: white;
+  text-shadow: 1px 1px #222; }
+  .App-header .welcome-msg {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+    text-align: center;
+    text-shadow: none; }
+
+#search {
+  padding-top: 2rem;
+  max-width: 100%;
+  max-height: 100%; }
+  #search .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; }
+    @media (max-width: 845px) {
+      #search .container {
+        flex-wrap: wrap; } }
+    #search .container .form-field {
+      width: auto; }
+      #search .container .form-field .input-field {
+        margin-top: 2rem;
+        box-shadow: rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+        border: honeydew;
+        display: block;
+        padding: 16px;
+        border-radius: 4px;
+        outline: none;
+        margin-right: 0% !important;
+        min-width: 400px; }
+  #search #start,
+  #search #destination {
+    flex-grow: 1; }
+  #search .submit-button {
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; }
+    #search .submit-button button {
+      position: relative;
+      padding: 10px 40px;
+      margin: 0px 10px 10px 0px;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      color: #FFF;
+      text-decoration: none;
+      background-color: #3498DB;
+      border: 2px solid #2980B9;
+      text-shadow: 0px -2px #2980B9; }
+
+.autocomplete {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #555555;
+  width: auto;
+  z-index: 10;
+  text-shadow: none; }
+
+.prices {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  padding-top: 2rem; }
+  @media (max-width: 845px) {
+    .prices {
+      flex-wrap: wrap; } }
+
+.pricing-table .provider-name {
+  text-align: center; }
+
+.loading {
+  padding-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center; }

@@ -59,7 +59,7 @@ class Searchbar extends Component {
       autocompleteContainer: 'autocomplete'
     }
 
-    const AutocompleteItem = ({ suggestion }) => (<div><i className="fa fa-map-marker"></i>{suggestion}</div>)
+    const AutocompleteItem = ({ suggestion }) => (<div><i className="material-icons">place</i>{suggestion}</div>)
 
     return (
       <div>

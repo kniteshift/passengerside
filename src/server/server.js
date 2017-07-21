@@ -54,13 +54,15 @@ app.use((req, res) => {
             <title>Passenger Side</title>
                 <!-- Import Google Icon Font -->
             <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <script src="https://use.typekit.net/oil6vvx.js"></script>
+            <script>try{Typekit.load({ async: true });}catch(e){}</script>
             <!-- Import materialize.css -->
             ${
-          normalizeAssets(assetsByChunkName.main)
-          .filter(path => path.endsWith('.css'))
-          .map(path => `<link rel="stylesheet" href="${path}" />`)
-          .join('\n')
-        }
+              normalizeAssets(assetsByChunkName.main)
+              .filter(path => path.endsWith('.css'))
+              .map(path => `<link rel="stylesheet" href="${path}" />`)
+              .join('\n')
+            }
         </head>
         <body>
             <div id="root"></div>
