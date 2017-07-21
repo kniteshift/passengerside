@@ -4,7 +4,6 @@ import {
   compose, 
   applyMiddleware 
 } from 'redux'
-import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import { 
   fetchReducer,
@@ -20,8 +19,7 @@ export const configure = (initialState = {}) => {
   })
 
   const store = createStore(reducer, initialState, compose(
-    applyMiddleware(thunk, createLogger()),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
+    applyMiddleware(thunk)
   ))
 
   return store
