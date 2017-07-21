@@ -4,20 +4,39 @@ import { fetchPrices } from '../actions'
 import Searchbar from './searchbar'
 
 class Search extends Component {
+  constructor(props) {
+    super(props)
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
   handleSubmit(event) {
     event.preventDefault()
+
+    const location = Object.assign({}, this.props.location.start, this.props.location.destination)
+    
+    this.props.fetchPrices(location)
   }
 
   render() {
     return (
       <div id="search">
         <form 
-          onSubmit={this.handleSubmit}
-          className="container row">
-          <Searchbar purpose="Start" />
-          <Searchbar purpose="Destination" />
-          <button type="submit">Submit</button>
+          className="container">
+          <Searchbar 
+            purpose="Start" 
+            id="start" 
+          />
+          <Searchbar 
+            purpose="Destination" 
+            id="destination" 
+          />
         </form>
+        <div className="submit-button">
+          <button 
+            onClick={this.handleSubmit}
+            type="submit">Submit</button>
+        </div>
       </div>
     )
   }
@@ -26,9 +45,10 @@ class Search extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    start: state.start,
+    location: state.location,
     destination: state.destination
   }
 }
 
-export default connect(mapStateToProps)(Search)
+export default connect(mapStateToProps, { fetchPrices })(Search)
+

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId } from 'react-places-autocomplete'
+import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getStart, getDest, getDestFailure, getStartFailure } from '../actions'
@@ -9,34 +9,38 @@ class Searchbar extends Component {
     super(props)
     this.state = { 
       address: '',
-      purpose: ''
+      purpose: this.props.purpose
     }
+
+    this.handleSelect = this.handleSelect.bind(this)
     this.onChange = (address) => this.setState({ address })
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.purpose) {
-      this.setState({ purpose: nextProps.purpose })
-    }
-  }
-
   handleSelect(address) {
+    this.setState({
+      address
+    })
+
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
-        switch(this.state.purpose) {
-          case "Start":
+        if (this.state.purpose) {
+          if (this.state.purpose == "Start") {
             return this.props.getStart(latLng)
-          case "Destination":
-            return this.props.getEnd(latLng)
+          } 
+          else if (this.state.purpose == "Destination") {
+            return this.props.getDest(latLng)
+          }
         }
       })
       .catch(err => {
-        switch(this.state.purpose) {
-          case "Start":
+        if (this.state.purpose) {
+          if (this.state.purpose == "Start") {
             return this.props.getStartFailure(err)
-          case "Destination":
+          }
+          else if (this.state.purpose == "Destination") {
             return this.props.getDestFailure(err)
+          }
         }
       })
   }
@@ -46,11 +50,11 @@ class Searchbar extends Component {
       value: this.state.address,
       onChange: this.onChange,
       type: 'search',
-      placeholder: this.props.purpose,
-      autoFocus: true
+      placeholder: this.props.purpose
     }
 
     const cssClasses = {
+      root: 'form-field',
       input: 'input-field',
       autocompleteContainer: 'autocomplete'
     }
@@ -65,6 +69,7 @@ class Searchbar extends Component {
           classNames={cssClasses}
           onSelect={this.handleSelect}
           onEnterKeyDown={this.handleSelect}
+          onBlur={this.handleSelect}
           />
       </div>
     )
@@ -72,7 +77,13 @@ class Searchbar extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(Object.assign({}, getStart, getDest, getDestFailure, getStartFailure))
+  return bindActionCreators(Object.assign(
+    {},
+    { getStart }, 
+    { getDest }, 
+    { getDestFailure }, 
+    { getStartFailure }
+  ), dispatch)
 }
 
 export default connect(null, mapDispatchToProps)(Searchbar)

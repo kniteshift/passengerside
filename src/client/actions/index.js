@@ -2,15 +2,18 @@ import axios from 'axios'
 import {
   FETCH_RATES_SUCCESS,
   FETCH_RATES_FAILURE,
+  FETCH_IN_PROGRESS,
+  FETCH_IS_COMPLETE,
   GET_START_SUCCESS,
   GET_START_FAILURE,
   GET_DEST_SUCCESS,
   GET_DEST_FAILURE
 } from './action-types'
+import { API_URL } from '../config/api'
 
 export function fetchPrices(props = {}) {  
   return dispatch => {
-    const API = `${process.env.API}`
+    const API = `${process.env.API || API_URL}`
     const { 
       start_lat,
       start_lng,
@@ -18,28 +21,32 @@ export function fetchPrices(props = {}) {
       end_lng
     } = props
 
+    dispatch(fetchInProgress())
+    
     axios.post(API, {
       start_lat,
       start_lng,
       end_lat,
       end_lng
     })
-      .then(res => dispatch(fetchSuccess(res)))
+      .then(res => dispatch(fetchSuccess(res.data)))
+      .then(() => dispatch(fetchIsComplete()))
       .catch(err => dispatch(fetchError(err)))
   }
 }
 
-// export function getStart(props = {}) {
-//   return dispatch => {
-//     dispatch(getStartSuccess())
-//   }
-// }
+export function fetchInProgress() {
+  return { 
+    type: FETCH_IN_PROGRESS
+  }
+}
 
-// export function getDest(props = {}) {
-//   return dispatch => {
-//     dispatch(getDestSuccess())
-//   }
-// }
+export function fetchIsComplete() {
+  return {
+    type: FETCH_IS_COMPLETE
+  }
+}
+
 
 export function fetchSuccess(rates) {
   return {
@@ -56,10 +63,16 @@ export function fetchError(error) {
 }
 
 export function getStart(coords) {
+  let obj = {
+    start_lat: coords.lat,
+    start_lng: coords.lng
+  }
+
   return {
     type: GET_START_SUCCESS,
-    payload: coords
+    payload: obj
   }
+
 }
 
 export function getStartFailure(error) {
@@ -70,9 +83,14 @@ export function getStartFailure(error) {
 }
 
 export function getDest(coords) {
+  let obj = {
+    end_lat: coords.lat,
+    end_lng: coords.lng
+  }
+
   return {
     type: GET_DEST_SUCCESS,
-    payload: coords
+    payload: obj
   }
 }
 

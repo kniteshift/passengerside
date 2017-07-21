@@ -2,7 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import webpack from 'webpack'
-import webpackMiddleware from 'webpack-dev-middleware'
+import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackConfig from '../../webpack.config'
 import { getLyftPrices, getUberPrices } from './utils/fetch'
 import { GOOGLE_API_KEY } from './config/key'
@@ -24,7 +24,9 @@ app.post('/fetch', (req, res, next) => {
     }
   }
 
-  fetchPrices(req, res).then(prices => res.status(200).send(prices))
+  fetchPrices(req, res)
+    .then(prices => res.status(200).send(prices))
+    .catch(err => res.status(400).send(err))
 })
 
 // WEBPACK
@@ -33,12 +35,14 @@ function normalizeAssets(assets) {
 }
 
 const compiler = webpack(webpackConfig)
-app.use(webpackMiddleware(compiler, {
+
+app.use(webpackDevMiddleware(compiler, {
   stats: {
     color: true
   },
   serverSideRender: true
 }))
+
 app.use((req, res) => {
   const assetsByChunkName = res.locals.webpackStats.toJson().assetsByChunkName
     res.send(`

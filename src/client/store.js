@@ -1,12 +1,22 @@
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+import { 
+  createStore, 
+  combineReducers, 
+  compose, 
+  applyMiddleware 
+} from 'redux'
 import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
-import { fetchReducer, locationReducer } from './reducers'
+import { 
+  fetchReducer,
+  locationReducer,
+  uiReducer 
+} from './reducers'
 
 export const configure = (initialState = {}) => {
   const reducer = combineReducers({
     rates: fetchReducer,
-    location: locationReducer
+    location: locationReducer,
+    loading: uiReducer
   })
 
   const store = createStore(reducer, initialState, compose(
