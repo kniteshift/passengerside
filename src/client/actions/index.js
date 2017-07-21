@@ -9,11 +9,10 @@ import {
   GET_DEST_SUCCESS,
   GET_DEST_FAILURE
 } from './action-types'
-import { API_URL } from '../config/api'
 
 export function fetchPrices(props = {}) {  
   return dispatch => {
-    const API = `${process.env.API || API_URL}`
+    const API = process.env.API
     const { 
       start_lat,
       start_lng,
