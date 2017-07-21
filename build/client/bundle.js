@@ -45961,10 +45961,12 @@ var Searchbar = function (_Component) {
 
     _this.state = {
       address: '',
-      purpose: _this.props.purpose
+      purpose: _this.props.purpose,
+      error: false
     };
 
     _this.handleSelect = _this.handleSelect.bind(_this);
+    _this.handleBlur = _this.handleBlur.bind(_this);
     return _this;
   }
 
@@ -45987,6 +45989,8 @@ var Searchbar = function (_Component) {
             return _this2.props.getDest(latLng);
           }
         }
+      }).then(function () {
+        return _this2.setState({ error: false });
       }).catch(function (err) {
         if (_this2.state.purpose) {
           if (_this2.state.purpose == "Start") {
@@ -45998,11 +46002,19 @@ var Searchbar = function (_Component) {
       });
     }
   }, {
+    key: 'handleBlur',
+    value: function handleBlur(e) {
+      if (e.target.value.length <= 6) {
+        this.setState({ error: true });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var inputProps = {
         value: this.state.address,
         onChange: this.handleSelect,
+        onBlur: this.handleBlur,
         type: 'search',
         placeholder: this.props.purpose
       };
@@ -46036,7 +46048,12 @@ var Searchbar = function (_Component) {
           classNames: cssClasses,
           onSelect: this.handleSelect,
           onEnterKeyDown: this.handleSelect
-        })
+        }),
+        this.state.error === true ? _react2.default.createElement(
+          'div',
+          null,
+          'Error: Please entire the full address of your destination'
+        ) : ' '
       );
     }
   }]);
@@ -47097,6 +47114,14 @@ var Results = function (_Component) {
         );
       }
 
+      if (this.props.error) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          'There was an error, please check your start and destination addresses, and make sure you select an item from the drop down list.'
+        );
+      }
+
       if (this.props.loading === true) {
         return _react2.default.createElement(
           'div',
@@ -47118,6 +47143,7 @@ var Results = function (_Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     rates: state.rates.rates,
+    error: state.rates.error,
     loading: state.loading.loading
   };
 };
