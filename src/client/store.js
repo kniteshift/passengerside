@@ -24,4 +24,3 @@ export const configure = (initialState = {}) => {
 
   return store
 }
-

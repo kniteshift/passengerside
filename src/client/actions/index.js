@@ -12,7 +12,6 @@ import {
 
 export function fetchPrices(props = {}) {  
   return dispatch => {
-    const API = process.env.API
     const { 
       start_lat,
       start_lng,
@@ -22,7 +21,7 @@ export function fetchPrices(props = {}) {
 
     dispatch(fetchInProgress())
     
-    axios.post(API, {
+    axios.post('/fetch', {
       start_lat,
       start_lng,
       end_lat,

@@ -29719,7 +29719,7 @@ exports.f = __webpack_require__(26) ? gOPD : function getOwnPropertyDescriptor(O
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
+
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -29746,7 +29746,6 @@ function fetchPrices() {
   var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   return function (dispatch) {
-    var API = process.env.API;
     var start_lat = props.start_lat,
         start_lng = props.start_lng,
         end_lat = props.end_lat,
@@ -29755,7 +29754,7 @@ function fetchPrices() {
 
     dispatch(fetchInProgress());
 
-    _axios2.default.post(API, {
+    _axios2.default.post('/fetch', {
       start_lat: start_lat,
       start_lng: start_lng,
       end_lat: end_lat,
@@ -29833,7 +29832,6 @@ function getDestFailure(error) {
     error: error
   };
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 156 */
