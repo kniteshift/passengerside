@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchPrices } from '../actions'
-import Searchbar from './searchbar'
+import Searchbar from './Searchbar'
 
 class Search extends Component {
   constructor(props) {

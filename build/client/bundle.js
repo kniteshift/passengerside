@@ -44956,9 +44956,9 @@ var _reactRedux = __webpack_require__(53);
 
 var _actions = __webpack_require__(155);
 
-var _searchbar = __webpack_require__(361);
+var _Searchbar = __webpack_require__(361);
 
-var _searchbar2 = _interopRequireDefault(_searchbar);
+var _Searchbar2 = _interopRequireDefault(_Searchbar);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44993,11 +44993,11 @@ var Search = function (_Component) {
           'form',
           {
             className: 'container' },
-          _react2.default.createElement(_searchbar2.default, {
+          _react2.default.createElement(_Searchbar2.default, {
             purpose: 'Start',
             id: 'start'
           }),
-          _react2.default.createElement(_searchbar2.default, {
+          _react2.default.createElement(_Searchbar2.default, {
             purpose: 'Destination',
             id: 'destination'
           })
