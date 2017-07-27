@@ -2,7 +2,7 @@ import React from 'react'
 
 export default (props) => {
   return (
-    <div>
+    <div className="tableroot">
       <table className="pricing-table">
         <thead>
           <tr>
@@ -13,8 +13,8 @@ export default (props) => {
           {props.provider.map(product => {
             return (
               <tr key={product.name}>
-                <td>{product.name}</td>
-                <td>{product.range}</td>
+                <td className="product-name">{product.name}</td>
+                <td className="cost">{product.range}</td>
               </tr>
             )
           })}

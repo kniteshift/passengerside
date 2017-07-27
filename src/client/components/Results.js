@@ -9,6 +9,13 @@ class Results extends Component {
   }
 
   render() {
+    if (this.props.loading === true) {
+      return (
+        <div className="loading">
+          <RotatingPlane size={100} />
+        </div>)
+    }
+
     if(this.props.rates) {
       const { lyft, uber } = this.props.rates
     
@@ -24,18 +31,12 @@ class Results extends Component {
       )
     } 
     
-    if(this.props.error) {
+    if(this.props.rateError) {
       return (
-        <div>There was an error, please check your start and destination addresses, and make sure you select an item from the drop down list.</div>
+        <div className="error">`{this.props.rateError}, please try again`</div>
       )
     }
 
-    if (this.props.loading === true) {
-      return (
-        <div className="loading">
-          <RotatingPlane size={100} />
-        </div>)
-    }
 
     return (
       <div className="prices">
@@ -48,7 +49,8 @@ class Results extends Component {
 const mapStateToProps = (state) => {
   return {
     rates: state.rates.rates,
-    error: state.rates.error,
+    rateError: state.rates.err || null,
+    location: state.location.error,
     loading: state.loading.loading,
   }
 }

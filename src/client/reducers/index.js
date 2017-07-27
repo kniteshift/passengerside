@@ -14,7 +14,7 @@ export const fetchReducer = (state = {}, action) => {
     case FETCH_RATES_SUCCESS:
       return { ...state, rates: action.payload }
     case FETCH_RATES_FAILURE:
-      return { ...state, err: action.err }
+      return { ...state, err: action.error }
     default:
       return state
   }

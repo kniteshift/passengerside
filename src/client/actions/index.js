@@ -29,7 +29,10 @@ export function fetchPrices(props = {}) {
     })
       .then(res => dispatch(fetchSuccess(res.data)))
       .then(() => dispatch(fetchIsComplete()))
-      .catch(err => dispatch(fetchError(err)))
+      .catch(err => { 
+        dispatch(fetchIsComplete())
+        dispatch(fetchError(err.response.data.body.message))
+      })
   }
 }
 
