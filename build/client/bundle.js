@@ -29764,7 +29764,8 @@ function fetchPrices() {
     }).then(function () {
       return dispatch(fetchIsComplete());
     }).catch(function (err) {
-      return dispatch(fetchError(err));
+      dispatch(fetchIsComplete());
+      dispatch(fetchError(err.response.data.body.message));
     });
   };
 }
@@ -43930,7 +43931,7 @@ var fetchReducer = exports.fetchReducer = function fetchReducer() {
     case _actionTypes.FETCH_RATES_SUCCESS:
       return (0, _extends3.default)({}, state, { rates: action.payload });
     case _actionTypes.FETCH_RATES_FAILURE:
-      return (0, _extends3.default)({}, state, { err: action.err });
+      return (0, _extends3.default)({}, state, { err: action.error });
     default:
       return state;
   }
@@ -47096,6 +47097,14 @@ var Results = function (_Component) {
   (0, _createClass3.default)(Results, [{
     key: 'render',
     value: function render() {
+      if (this.props.loading === true) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'loading' },
+          _react2.default.createElement(_betterReactSpinkit.RotatingPlane, { size: 100 })
+        );
+      }
+
       if (this.props.rates) {
         var _props$rates = this.props.rates,
             lyft = _props$rates.lyft,
@@ -47114,19 +47123,13 @@ var Results = function (_Component) {
         );
       }
 
-      if (this.props.error) {
+      if (this.props.rateError) {
         return _react2.default.createElement(
           'div',
-          null,
-          'There was an error, please check your start and destination addresses, and make sure you select an item from the drop down list.'
-        );
-      }
-
-      if (this.props.loading === true) {
-        return _react2.default.createElement(
-          'div',
-          { className: 'loading' },
-          _react2.default.createElement(_betterReactSpinkit.RotatingPlane, { size: 100 })
+          { className: 'error' },
+          '`',
+          this.props.rateError,
+          ', please try again`'
         );
       }
 
@@ -47143,7 +47146,8 @@ var Results = function (_Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     rates: state.rates.rates,
-    error: state.rates.error,
+    rateError: state.rates.err || null,
+    location: state.location.error,
     loading: state.loading.loading
   };
 };
@@ -50799,7 +50803,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = function (props) {
   return _react2.default.createElement(
     "div",
-    null,
+    { className: "tableroot" },
     _react2.default.createElement(
       "table",
       { className: "pricing-table" },
@@ -50825,12 +50829,12 @@ exports.default = function (props) {
             { key: product.name },
             _react2.default.createElement(
               "td",
-              null,
+              { className: "product-name" },
               product.name
             ),
             _react2.default.createElement(
               "td",
-              null,
+              { className: "cost" },
               product.range
             )
           );

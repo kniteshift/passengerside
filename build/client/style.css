@@ -107,8 +107,10 @@ form {
     .prices {
       flex-wrap: wrap; } }
 
-.pricing-table .provider-name {
-  text-align: center; }
+.pricing-table {
+  width: 100%; }
+  .pricing-table .provider-name {
+    text-align: center; }
 
 .loading {
   padding-top: 5rem;
@@ -116,3 +118,14 @@ form {
   justify-content: center;
   align-content: center;
   align-items: center; }
+
+.error {
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 2rem; }
+
+.tableroot {
+  width: auto; }
+
+.cost {
+  padding-left: 15%; }
